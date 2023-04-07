@@ -53,6 +53,7 @@ screens:
           - Picture Viewer: org.gnome.eog
           - Font Viewer: org.gnome.font-viewer
           - Font Downloader: org.gustavoperedo.FontDownloader
+          - Black Box Terminal: com.raggesilver.BlackBox
         Web Browsers:
           description: Additional browsers to complement Firefox
           default: false
@@ -61,6 +62,7 @@ screens:
           - Google Chrome: com.google.Chrome
           - Microsoft Edge: com.microsoft.Edge
           - Opera: com.opera.Opera
+          - Ungoogled Chromium: com.github.Eloston.UngoogledChromium
         Gaming:
           description: "Rock and Stone!"
           default: false

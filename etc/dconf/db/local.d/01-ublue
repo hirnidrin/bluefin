@@ -17,7 +17,7 @@ gtk-theme="Yaru"
 font-antialiasing="rgba"
 font-name="Ubuntu 12"
 document-font-name="Ubuntu 12"
-monospace-font-name="Ubuntu Mono 18"
+monospace-font-name="Ubuntu Mono 11"
 
 [org/gnome/desktop/sound]
 allow-volume-above-100-percent=true
@@ -60,6 +60,6 @@ use-custom-command=true
 custom-shell-command='distrobox enter ubuntu'
 theme-dark="Yaru"
 style-preference=2
-font="Ubuntu Mono 16"
+font="Ubuntu Mono 12"
 window-width=975
 window-height=650
