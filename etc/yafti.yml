@@ -33,6 +33,7 @@ screens:
           default: true
           packages:
           - Backup: org.gnome.DejaDup
+          - Blackbox Terminal: com.raggesilver.BlackBox
           - Calculator: org.gnome.Calculator
           - Calendar: org.gnome.Calendar
           - Characters: org.gnome.Characters
@@ -53,7 +54,6 @@ screens:
           - Picture Viewer: org.gnome.eog
           - Font Viewer: org.gnome.font-viewer
           - Font Downloader: org.gustavoperedo.FontDownloader
-          - Black Box Terminal: com.raggesilver.BlackBox
         Web Browsers:
           description: Additional browsers to complement Firefox
           default: false
