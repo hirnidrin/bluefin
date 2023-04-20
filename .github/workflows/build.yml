@@ -1,5 +1,7 @@
 name: Build and Push Image
 on:
+  schedule:
+    - cron: '21 40 * * *'  # ublue-os/main (which we build upon) builds 20:20 every day -> we build a bit later
   push:
     branches:
       - main
@@ -27,7 +29,7 @@ jobs:
         include:
           - major_version: 38
             is_latest_version: true
-            is_stable_version: false
+            is_stable_version: true
     steps: 
       # Checkout push-to-registry action GitHub repository
       - name: Checkout Push to Registry action
