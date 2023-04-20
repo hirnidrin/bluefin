@@ -1,7 +1,7 @@
 name: Build and Push Image
 on:
   schedule:
-    - cron: '21 40 * * *'  # ublue-os/main (which we build upon) builds 20:20 every day -> we build a bit later
+    - cron: '40 21 * * *'  # ublue-os/main (which we build upon) builds 20:20 every day -> we build a bit later
   push:
     branches:
       - main
