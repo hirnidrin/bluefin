@@ -1,10 +1,40 @@
-distrobox-bluefin:
-  echo 'Creating Blufin Ubuntu distrobox ...'
-  distrobox create --image ghcr.io/ublue-os/ubuntu-toolbox:latest -n bluefin -Y
+benchmark:
+  echo 'Running a 1 minute benchmark ...'
+  stress-ng --matrix 0 -t 1m --times
+
+assemble:
+  echo 'Assembling and replacing distroboxes ...'
+  distrobox assemble create --replace --file /etc/distrobox/distrobox.ini
+
+brew:
+  echo "Installing homebrew ..."
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+cockpit:
+  echo 'Enabling Cockpit'
+  echo 'PasswordAuthentication yes' | sudo tee /etc/ssh/sshd_config.d/02-enable-passwords.conf
+  sudo systemctl try-restart sshd
+  sudo systemctl enable --now sshd
+  sudo podman container runlabel --name cockpit-ws RUN quay.io/cockpit/ws
+  sudo podman container runlabel INSTALL quay.io/cockpit/ws
+  sudo systemctl enable cockpit.service
+
+code-profile:
+  xdg-open https://vscode.dev/profile/github/c761b7738e9a7b02286d6d94cb2d1ecd
+
+distrobox-wolfi:
+  echo 'Creating WolfiOS distrobox ...'
+  distrobox create --image ghcr.io/ublue-os/wolfi-toolbox:latest -n wolfi 
 
 distrobox-universal:
   echo 'Creating Universal Development distrobox ...'
   distrobox create --image mcr.microsoft.com/devcontainers/universal:latest -n universal -Y
+
+framework-13:
+  rpm-ostree kargs --append="module_blacklist=hid_sensor_hub" --append="nvme.noacpi=1" --append="tpm_tis.interrupts=0"
+
+fish:
+  sudo lchsh $USER /usr/bin/fish
 
 gnome-extensions:
   pip install --upgrade gnome-extensions-cli
@@ -27,7 +57,10 @@ nix-devbox-global:
   echo 'run "devbox global run install-bash-hook" to configure bash shell'
   echo 'run "devbox global run install-zsh-hook" to configure zsh shell'
   echo 'run "devbox global run" to see other available configuration commands'
- 
+
+tea:
+  echo 'Installing the tea package manager'
+  sh <(curl https://tea.xyz)
   
 touch:
   pip install --upgrade gnome-extensions-cli
@@ -42,4 +75,4 @@ yafti:
   yafti /etc/yafti.yml
 
 zsh:
-  sudo lchsh -i
+  sudo lchsh $USER /usr/bin/zsh

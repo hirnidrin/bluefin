@@ -3,6 +3,7 @@ ARG IMAGE_FLAVOR="${IMAGE_FLAVOR:-main}"
 ARG SOURCE_IMAGE="${SOURCE_IMAGE:-$BASE_IMAGE_NAME-$IMAGE_FLAVOR}"
 ARG BASE_IMAGE="ghcr.io/ublue-os/${SOURCE_IMAGE}"
 ARG FEDORA_MAJOR_VERSION="${FEDORA_MAJOR_VERSION:-37}"
+ARG TARGET_BASE="${TARGET_BASE:-bluefin}"
 
 FROM ${BASE_IMAGE}:${FEDORA_MAJOR_VERSION} AS bluefin
 
@@ -14,10 +15,10 @@ COPY usr /usr
 
 COPY --from=docker.io/bketelsen/vanilla-os:v0.0.12 /usr/share/backgrounds/vanilla /usr/share/backgrounds/vanilla
 COPY --from=docker.io/bketelsen/vanilla-os:v0.0.12 /usr/share/gnome-background-properties/vanilla.xml /usr/share/gnome-background-properties/vanilla.xml
+COPY --from=cgr.dev/chainguard/cosign:latest /usr/bin/cosign /usr/bin/cosign
 
-
-#RUN wget https://copr.fedorainfracloud.org/coprs/kylegospo/gnome-vrr/repo/fedora-"${FEDORA_MAJOR_VERSION}"/kylegospo-gnome-vrr-fedora-"${FEDORA_MAJOR_VERSION}".repo -O /etc/yum.repos.d/_copr_kylegospo-gnome-vrr.repo
-#RUN rpm-ostree override replace --experimental --from repo=copr:copr.fedorainfracloud.org:kylegospo:gnome-vrr mutter gnome-control-center gnome-control-center-filesystem
+RUN wget https://copr.fedorainfracloud.org/coprs/kylegospo/gnome-vrr/repo/fedora-"${FEDORA_MAJOR_VERSION}"/kylegospo-gnome-vrr-fedora-"${FEDORA_MAJOR_VERSION}".repo -O /etc/yum.repos.d/_copr_kylegospo-gnome-vrr.repo
+RUN rpm-ostree override replace --experimental --from repo=copr:copr.fedorainfracloud.org:kylegospo:gnome-vrr mutter gnome-control-center gnome-control-center-filesystem xorg-x11-server-Xwayland
 
 ADD packages.json /tmp/packages.json
 ADD build.sh /tmp/build.sh
@@ -29,22 +30,17 @@ RUN /tmp/build.sh && \
     systemctl enable rpm-ostree-countme.service && \
     systemctl enable tailscaled.service && \
     fc-cache -f /usr/share/fonts/ubuntu && \
+    fc-cache -f /usr/share/fonts/inter && \
     rm -f /etc/yum.repos.d/tailscale.repo && \
+    rm -f /usr/share/applications/fish.desktop && \
+    rm -f /usr/share/applications/htop.desktop && \
+    rm -f /usr/share/applications/nvtop.desktop && \
     sed -i 's/#DefaultTimeoutStopSec.*/DefaultTimeoutStopSec=15s/' /etc/systemd/user.conf && \
     sed -i 's/#DefaultTimeoutStopSec.*/DefaultTimeoutStopSec=15s/' /etc/systemd/system.conf && \
     rm -rf /tmp/* /var/* && \
     ostree container commit && \
     mkdir -p /var/tmp && \
     chmod -R 1777 /var/tmp
-
-# K8s tools
-
-COPY --from=cgr.dev/chainguard/kubectl:latest /usr/bin/kubectl /usr/bin/kubectl
-COPY --from=cgr.dev/chainguard/cosign:latest /usr/bin/cosign /usr/bin/cosign
-
-RUN curl -Lo ./kind "https://kind.sigs.k8s.io/dl/v0.17.0/kind-$(uname)-amd64"
-RUN chmod +x ./kind
-RUN mv ./kind /usr/bin/kind
 
 ## bluefin-dx developer edition image section
 # TODO: this should be in packages.json but yolo for now
@@ -64,16 +60,34 @@ RUN wget https://terra.fyralabs.com/terra.repo -O /etc/yum.repos.d/terra.repo
 
 RUN rpm-ostree install code
 RUN rpm-ostree install lxd lxc
-RUN rpm-ostree install iotop dbus-x11 podman-compose podman-docker podman-plugins podman-tui
-RUN rpm-ostree install adobe-source-code-pro-fonts cascadiacode-nerd-fonts google-droid-sans-mono-fonts google-go-mono-fonts ibm-plex-mono-fonts jetbrains-mono-fonts-all mozilla-fira-mono-fonts powerline-fonts ubuntumono-nerd-fonts
-RUN rpm-ostree install qemu qemu-user-static qemu-user-binfmt virt-manager libvirt qemu qemu-user-static qemu-user-binfmt edk2-ovmf
-RUN rpm-ostree install cockpit-bridge cockpit-system cockpit-networkmanager cockpit-selinux cockpit-storaged cockpit-podman cockpit-machines cockpit-pcp
-RUN rpm-ostree install cargo nodejs-npm p7zip p7zip-plugins powertop rust
+RUN rpm-ostree install iotop dbus-x11 podman-docker podman-plugins podman-tui
+RUN rpm-ostree install adobe-source-code-pro-fonts cascadiacode-nerd-fonts google-droid-sans-mono-fonts google-go-mono-fonts ibm-plex-mono-fonts jetbrains-mono-fonts-all mozilla-fira-mono-fonts powerline-fonts ubuntumono-nerd-fonts ubuntu-nerd-fonts
+RUN rpm-ostree install qemu qemu-user-static qemu-user-binfmt virt-manager libvirt edk2-ovmf
+RUN rpm-ostree install cockpit-system cockpit-ostree cockpit-networkmanager cockpit-selinux cockpit-storaged cockpit-podman cockpit-machines cockpit-pcp
+RUN rpm-ostree install p7zip p7zip-plugins powertop
+RUN rpm-ostree install podmansh
 
+RUN wget https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64 -O /tmp/docker-compose && \
+    install -c -m 0755 /tmp/docker-compose /usr/bin
+
+COPY --from=cgr.dev/chainguard/cosign:latest /usr/bin/cosign /usr/bin/cosign
 COPY --from=cgr.dev/chainguard/flux:latest /usr/bin/flux /usr/bin/flux
 COPY --from=cgr.dev/chainguard/helm:latest /usr/bin/helm /usr/bin/helm
 COPY --from=cgr.dev/chainguard/ko:latest /usr/bin/ko /usr/bin/ko
 COPY --from=cgr.dev/chainguard/minio-client:latest /usr/bin/mc /usr/bin/mc
+COPY --from=cgr.dev/chainguard/kubectl:latest /usr/bin/kubectl /usr/bin/kubectl
+
+RUN curl -Lo ./kind "https://github.com/kubernetes-sigs/kind/releases/latest/download/kind-$(uname)-amd64"
+RUN chmod +x ./kind
+RUN mv ./kind /usr/bin/kind
+
+# Install DevPod
+RUN rpm-ostree install $(curl https://api.github.com/repos/loft-sh/devpod/releases/latest | jq -r '.assets[] | select(.name| test(".*x86_64.rpm$")).browser_download_url') && \
+  wget https://github.com/loft-sh/devpod/releases/latest/download/devpod-linux-amd64 -O /tmp/devpod && \
+  install -c -m 0755 /tmp/devpod /usr/bin
+
+RUN systemctl enable podman.socket
+RUN systemctl disable pmie.service
 
 RUN /tmp/workarounds.sh
 
@@ -83,6 +97,20 @@ RUN rm -f /etc/yum.repos.d/ganto-lxc4-fedora-"${FEDORA_MAJOR_VERSION}".repo
 RUN rm -f /etc/yum.repos.d/vscode.repo
 RUN rm -f /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:phracek:PyCharm.repo
 RUN rm -f /etc/yum.repos.d/fedora-cisco-openh264.repo
+
+RUN rm -rf /tmp/* /var/*
+RUN ostree container commit
+
+# Image for Framework laptops
+FROM bluefin AS bluefin-framework
+
+COPY framework/etc /etc
+COPY framework/usr /usr
+
+RUN rpm-ostree install tlp tlp-rdw stress-ng
+RUN rpm-ostree override remove power-profiles-daemon
+RUN systemctl enable tlp
+RUN systemctl enable fprintd.service
 
 RUN rm -rf /tmp/* /var/*
 RUN ostree container commit
