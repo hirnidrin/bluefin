@@ -30,7 +30,7 @@ jobs:
           - major_version: 38
             is_latest_version: true
             is_stable_version: true
-    steps: 
+    steps:
       # Checkout push-to-registry action GitHub repository
       - name: Checkout Push to Registry action
         uses: actions/checkout@v3
@@ -111,12 +111,30 @@ jobs:
       # evalutates to `FROM bluefin as framework` but buildah then looks for quay.io/bluefin
       # vs the existing containerfile target.
       # TODO(GH-280): Find an alternative for this rather than using sed.
-      - name: Build Image
+      - name: Build Image - setup Containerfile for bluefin-framework version build
         id: sed_workaround
         if: matrix.target_base
         shell: bash
         run: |
           sed -i 's/FROM bluefin AS bluefin-framework/FROM ${{ matrix.target_base }} AS ${{ matrix.base_name }}/' Containerfile
+
+      # Make room in builder image because buildah action fails with error 125 'no space left on device' when building bluefin-dx, see
+      # https://github.com/actions/runner-images/issues/2875#issuecomment-1167936457 and https://github.com/jlumbroso/free-disk-space
+      - name: Free Disk Space (Ubuntu) on builder image
+        uses: jlumbroso/free-disk-space@main
+        with:
+          # this might remove tools that are actually needed,
+          # if set to "true" but frees about 6 GB
+          tool-cache: false
+          
+          # all of these default to true, but feel free to set to
+          # "false" if necessary for your workflow
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
 
       # Build image using Buildah action
       - name: Build Image
