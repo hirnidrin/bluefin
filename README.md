@@ -1,6 +1,6 @@
 # bluefin
 
-A clone of [ublue-os bluefin](https://github.com/ublue-os/bluefin), slightly adapted for me. All credit goes to [team uBlue](https://ublue.it/) - my hat's off to you!
+A clone of [ublue-os bluefin](https://github.com/ublue-os/bluefin), slightly adapted for me. All credit goes to [team Universal Blue](https://universal-blue.org/) - my hat's off to you!
 
 ## Notes
 
@@ -34,3 +34,10 @@ A clone of [ublue-os bluefin](https://github.com/ublue-os/bluefin), slightly ada
          sudo rpm-ostree rebase ostree-image-signed:docker://ghcr.io/hirnidrin/bluefin-dx:38
 
 4. Reboot the system and you're done!
+
+## Original documentation
+
+1. [Bluefin](https://universal-blue.org/images/bluefin/)
+2. [Developer Experience Edition](https://universal-blue.org/images/bluefin/developer-experience/)
+3. [Administrator's Guide](https://universal-blue.org/images/bluefin/admin/)
+4. [Framework Images](https://universal-blue.org/images/bluefin/framework/)

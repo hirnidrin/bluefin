@@ -2,8 +2,9 @@
     "all": {
         "include": {
             "all": [
-	            "cockpit-bridge",
-                "ddccontrol",
+                "cockpit-bridge",
+                "ddccontrol", 
+                "ddccontrol-db", 
                 "ddccontrol-gtk",
                 "fish",
                 "gnome-shell-extension-appindicator",
@@ -34,7 +35,7 @@
             "all": [
                 "firefox",
                 "firefox-langpacks",
-	        "gnome-software-rpm-ostree", 
+	            "gnome-software-rpm-ostree", 
                 "gnome-tour"
             ]
         }
