@@ -121,7 +121,7 @@ jobs:
       # Make room in builder image because buildah action fails with error 125 'no space left on device' when building bluefin-dx, see
       # https://github.com/actions/runner-images/issues/2875#issuecomment-1167936457 and https://github.com/jlumbroso/free-disk-space
       - name: Free Disk Space (Ubuntu) on builder image
-        uses: jlumbroso/free-disk-space@main
+        uses: hirnidrin/free-disk-space@main
         with:
           # this might remove tools that are actually needed,
           # if set to "true" but frees about 6 GB
