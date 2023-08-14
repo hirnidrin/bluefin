@@ -23,6 +23,7 @@
                 "samba-dcerpc",
                 "samba-winbind-clients",
                 "samba-winbind-modules",
+                "stress-ng",
                 "tailscale",
         		"tmux",
                 "wireguard-tools",
