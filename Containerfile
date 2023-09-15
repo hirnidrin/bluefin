@@ -2,32 +2,35 @@ ARG BASE_IMAGE_NAME="${BASE_IMAGE_NAME:-silverblue}"
 ARG IMAGE_FLAVOR="${IMAGE_FLAVOR:-main}"
 ARG SOURCE_IMAGE="${SOURCE_IMAGE:-$BASE_IMAGE_NAME-$IMAGE_FLAVOR}"
 ARG BASE_IMAGE="ghcr.io/ublue-os/${SOURCE_IMAGE}"
-ARG FEDORA_MAJOR_VERSION="${FEDORA_MAJOR_VERSION:-37}"
+ARG FEDORA_MAJOR_VERSION="${FEDORA_MAJOR_VERSION:-38}"
 ARG TARGET_BASE="${TARGET_BASE:-bluefin}"
 
+## bluefin image section
 FROM ${BASE_IMAGE}:${FEDORA_MAJOR_VERSION} AS bluefin
 
-ARG IMAGE_NAME="${IMAGE_NAME}"
 ARG FEDORA_MAJOR_VERSION="${FEDORA_MAJOR_VERSION}"
+ARG PACKAGE_LIST="bluefin"
 
-COPY etc /etc
 COPY usr /usr
+COPY etc/yum.repos.d/ /etc/yum.repos.d/
+COPY packages.json /tmp/packages.json
+COPY build.sh /tmp/build.sh
 
-COPY --from=cgr.dev/chainguard/cosign:latest /usr/bin/cosign /usr/bin/cosign
-
+# gnome-vrr
 RUN wget https://copr.fedorainfracloud.org/coprs/kylegospo/gnome-vrr/repo/fedora-"${FEDORA_MAJOR_VERSION}"/kylegospo-gnome-vrr-fedora-"${FEDORA_MAJOR_VERSION}".repo -O /etc/yum.repos.d/_copr_kylegospo-gnome-vrr.repo
 RUN rpm-ostree override replace --experimental --from repo=copr:copr.fedorainfracloud.org:kylegospo:gnome-vrr mutter mutter-common gnome-control-center gnome-control-center-filesystem xorg-x11-server-Xwayland
 RUN rm -f /etc/yum.repos.d/_copr_kylegospo-gnome-vrr.repo
 
-ADD packages.json /tmp/packages.json
-ADD build.sh /tmp/build.sh
+## bootc
+RUN wget https://copr.fedorainfracloud.org/coprs/rhcontainerbot/bootc/repo/fedora-"${FEDORA_MAJOR_VERSION}"/bootc-"${FEDORA_MAJOR_VERSION}".repo -O /etc/yum.repos.d/bootc.repo
+RUN rpm-ostree install bootc
+RUN rm -f /etc/yum.repos.d/bootc-"${FEDORA_MAJOR_VERSION}".repo
 
 RUN /tmp/build.sh && \
     pip install --prefix=/usr yafti && \
-    systemctl unmask dconf-update.service && \
-    systemctl enable dconf-update.service && \
     systemctl enable rpm-ostree-countme.service && \
     systemctl enable tailscaled.service && \
+    systemctl enable dconf-update.service && \
     fc-cache -f /usr/share/fonts/ubuntu && \
     fc-cache -f /usr/share/fonts/inter && \
     rm -f /etc/yum.repos.d/tailscale.repo && \
@@ -43,34 +46,30 @@ RUN /tmp/build.sh && \
     chmod -R 1777 /var/tmp
 
 ## bluefin-dx developer edition image section
-# TODO: this should be in packages.json but yolo for now
-
 FROM bluefin AS bluefin-dx
 
-ARG IMAGE_NAME="${IMAGE_NAME}"
 ARG FEDORA_MAJOR_VERSION="${FEDORA_MAJOR_VERSION}"
+ARG PACKAGE_LIST="bluefin-dx"
 
 # dx specific files come from the dx directory in this repo
-COPY dx/etc /etc
 COPY dx/usr /usr
+COPY dx/etc/yum.repos.d/ /etc/yum.repos.d/
 COPY workarounds.sh /tmp/workarounds.sh
+COPY packages.json /tmp/packages.json
+COPY build.sh /tmp/build.sh
+
+# Apply IP Forwarding before installing Docker to prevent messing with LXC networking
+RUN sysctl -p
 
 RUN wget https://copr.fedorainfracloud.org/coprs/ganto/lxc4/repo/fedora-"${FEDORA_MAJOR_VERSION}"/ganto-lxc4-fedora-"${FEDORA_MAJOR_VERSION}".repo -O /etc/yum.repos.d/ganto-lxc4-fedora-"${FEDORA_MAJOR_VERSION}".repo
-RUN wget https://terra.fyralabs.com/terra.repo -O /etc/yum.repos.d/terra.repo
+RUN wget https://copr.fedorainfracloud.org/coprs/bobslept/nerd-fonts/repo/fedora-"${FEDORA_MAJOR_VERSION}"/bobslept-nerd-fonts-fedora-"${FEDORA_MAJOR_VERSION}".repo -O /etc/yum.repos.d/bobslept-nerd-fonts-fedora-"${FEDORA_MAJOR_VERSION}".repo
 
-RUN rpm-ostree install code
-RUN rpm-ostree install lxd lxc lxd-agent
-RUN rpm-ostree install iotop dbus-x11 podman-plugins podman-tui
-RUN rpm-ostree install adobe-source-code-pro-fonts cascadiacode-nerd-fonts google-droid-sans-mono-fonts google-go-mono-fonts ibm-plex-mono-fonts jetbrains-mono-fonts-all mozilla-fira-mono-fonts powerline-fonts ubuntumono-nerd-fonts ubuntu-nerd-fonts
-RUN rpm-ostree install qemu qemu-user-static qemu-user-binfmt virt-manager libvirt edk2-ovmf edk2-ovmf genisoimage qemu-img qemu-system-x86-core qemu-char-spice qemu-device-usb-redirect qemu-device-display-virtio-vga qemu-device-display-virtio-gpu
-RUN rpm-ostree install cockpit-system cockpit-ostree cockpit-networkmanager cockpit-selinux cockpit-storaged cockpit-podman cockpit-machines cockpit-pcp
-RUN rpm-ostree install p7zip p7zip-plugins powertop
-RUN rpm-ostree install podmansh
+# Handle packages via packages.json
+RUN /tmp/build.sh
 
 RUN wget https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64 -O /tmp/docker-compose && \
     install -c -m 0755 /tmp/docker-compose /usr/bin
 
-COPY --from=cgr.dev/chainguard/cosign:latest /usr/bin/cosign /usr/bin/cosign
 COPY --from=cgr.dev/chainguard/flux:latest /usr/bin/flux /usr/bin/flux
 COPY --from=cgr.dev/chainguard/helm:latest /usr/bin/helm /usr/bin/helm
 COPY --from=cgr.dev/chainguard/ko:latest /usr/bin/ko /usr/bin/ko
@@ -100,9 +99,10 @@ RUN systemctl disable pmlogger.service
 RUN /tmp/workarounds.sh
 
 # Clean up repos, everything is on the image so we don't need them
-RUN rm -f /etc/yum.repos.d/terra.repo
+RUN rm -f /etc/yum.repos.d/bobslept-nerd-fonts-fedora-"${FEDORA_MAJOR_VERSION}".repo
 RUN rm -f /etc/yum.repos.d/ganto-lxc4-fedora-"${FEDORA_MAJOR_VERSION}".repo
 RUN rm -f /etc/yum.repos.d/vscode.repo
+RUN rm -f /etc/yum.repos.d/docker-ce.repo
 RUN rm -f /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:phracek:PyCharm.repo
 RUN rm -f /etc/yum.repos.d/fedora-cisco-openh264.repo
 
@@ -112,11 +112,16 @@ RUN ostree container commit
 # Image for Framework laptops
 FROM bluefin AS bluefin-framework
 
-COPY framework/etc /etc
-COPY framework/usr /usr
+ARG FEDORA_MAJOR_VERSION="${FEDORA_MAJOR_VERSION}"
+ARG PACKAGE_LIST="bluefin-framework"
 
-RUN rpm-ostree install tlp tlp-rdw stress-ng
-RUN rpm-ostree override remove power-profiles-daemon
+COPY framework/usr /usr
+COPY packages.json /tmp/packages.json
+COPY build.sh /tmp/build.sh
+
+# Handle packages via packages.json
+RUN /tmp/build.sh
+
 RUN systemctl enable tlp
 RUN systemctl enable fprintd.service
 

@@ -40,6 +40,7 @@ A clone of [ublue-os bluefin](https://github.com/ublue-os/bluefin), slightly ada
 ## Original documentation
 
 1. [Bluefin](https://universal-blue.org/images/bluefin/)
-2. [Developer Experience Edition](https://universal-blue.org/images/bluefin/developer-experience/)
-3. [Administrator's Guide](https://universal-blue.org/images/bluefin/admin/)
-4. [Framework Images](https://universal-blue.org/images/bluefin/framework/)
+2. [Discussions and Announcements](https://github.com/orgs/ublue-os/discussions/categories/bluefin) - strongly recommended!
+3. [Developer Experience Edition](https://universal-blue.org/images/bluefin/developer-experience/)
+4. [Administrator's Guide](https://universal-blue.org/images/bluefin/admin/)
+5. [Framework Images](https://universal-blue.org/images/bluefin/framework/)
