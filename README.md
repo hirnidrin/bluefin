@@ -11,8 +11,8 @@ A clone of [ublue-os bluefin](https://github.com/ublue-os/bluefin), slightly ada
 1. This repo holds the code for all of the above. I just skip building these using a modified `.github/workflows` folder.
 1. My changes are
    * modified/additional dconf settings in `usr/etc/dconf/db/local.d/02-mysysdefaults`
-   * modified/additional packages in `usr/etc/yafti.yml`
-   * additional distrobox image in `dx/etc/distrobox/distrobox.ini` (build with `just assemble`):
+   * additional [flathub.org](https://flathub.org/) apps in `usr/etc/yafti.yml`
+   * additional distrobox images in `dx/etc/distrobox/distrobox.ini` (build with `just assemble`):
      * [chainguard.dev](https://edu.chainguard.dev/chainguard/chainguard-images/reference/node/image_specs/) nodejs development image.
 
 ## Initial install

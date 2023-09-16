@@ -73,6 +73,7 @@ screens:
           packages:
           - Discord: com.discordapp.Discord
           - Slack: com.slack.Slack
+          - Signal: org.signal.Signal
         Gaming:
           description: "Rock and Stone!"
           default: false
