@@ -1,7 +1,7 @@
 name: Build and Push Image
 on:
   schedule:
-    - cron: '22 8 * * *'  # ublue-os/main (which we build upon) builds 07:00 every day -> we build a bit later
+    - cron: '22 9 * * *'  # ublue-os/main (which we build upon) builds 08:00 every day -> we build a bit later
   push:
     branches:
       - main
@@ -83,16 +83,16 @@ jobs:
               echo "${TAG}"
           done
           echo "alias_tags=${alias_tags[*]}" >> $GITHUB_OUTPUT
-          
+
       - name: Get Current Fedora Version
         id: labels
-        run: |  
+        run: |
           ver=$(skopeo inspect docker://ghcr.io/ublue-os/silverblue-${{ matrix.image_flavor }}:${{ matrix.major_version }} | jq -r '.Labels["org.opencontainers.image.version"]')
           echo "VERSION=$ver" >> $GITHUB_OUTPUT
 
       # Build metadata
       - name: Image Metadata
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v5
         id: meta
         with:
           images: |
@@ -104,20 +104,6 @@ jobs:
             io.artifacthub.package.readme-url=https://raw.githubusercontent.com/hirnidrin/bluefin/main/README.md
             io.artifacthub.package.logo-url=https://avatars.githubusercontent.com/u/120078124?s=200&v=4
 
-      # Update FROM lines for variants that have their own matrix via SED
-      # This is due to limitations in buildah using interpreted values as registry
-      # images and not image targets in file:
-      #   `FROM ${TARGET_BASE} as framework`
-      # evalutates to `FROM bluefin as framework` but buildah then looks for quay.io/bluefin
-      # vs the existing containerfile target.
-      # TODO(GH-280): Find an alternative for this rather than using sed.
-      - name: Build Image - setup Containerfile for bluefin-framework version build
-        id: sed_workaround
-        if: matrix.target_base
-        shell: bash
-        run: |
-          sed -i 's/FROM bluefin AS bluefin-framework/FROM ${{ matrix.target_base }} AS ${{ matrix.base_name }}/' Containerfile
-
       # Make room in builder image because buildah action fails with error 125 'no space left on device' when building bluefin-dx, see
       # https://github.com/actions/runner-images/issues/2875#issuecomment-1167936457 and https://github.com/jlumbroso/free-disk-space
       - name: Free Disk Space (Ubuntu) on builder image
@@ -126,7 +112,6 @@ jobs:
           # this might remove tools that are actually needed,
           # if set to "true" but frees about 6 GB
           tool-cache: false
-          
           # all of these default to true, but feel free to set to
           # "false" if necessary for your workflow
           android: true
@@ -184,7 +169,7 @@ jobs:
             --disable-content-trust
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         if: github.event_name != 'pull_request'
         with:
           registry: ghcr.io
@@ -209,3 +194,11 @@ jobs:
         run: |
           echo "${{ toJSON(steps.push.outputs) }}"
 
+  check:
+    name: Check all builds successful
+    runs-on: ubuntu-latest
+    needs: [push-ghcr]
+    steps:
+      - name: Exit
+        shell: bash
+        run: exit 0
