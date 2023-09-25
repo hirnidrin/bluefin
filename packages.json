@@ -31,6 +31,7 @@
 				"wireguard-tools",
 				"xprop",
 				"yaru-theme",
+				"wl-clipboard", 
 				"zsh"
 			],
 			"bluefin-dx": [
@@ -82,14 +83,14 @@
 				"qemu",
 				"ubuntu-nerd-fonts",
 				"ubuntumono-nerd-fonts",
-				"virt-manager",
-				"wl-clipboard"
+				"virt-manager"
 			]
 		},
 		"exclude": {
 			"bluefin": [
 				"firefox-langpacks",
 				"firefox",
+				"gnome-extensions-app",
 				"gnome-software-rpm-ostree",
 				"gnome-tour"
 			],
