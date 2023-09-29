@@ -2,10 +2,6 @@
 
 set -ouex pipefail
 
-# force use of single rpmfusion mirror
-sed -i.bak 's%^metalink=%#metalink=%' /etc/yum.repos.d/fedora-updates.repo
-sed -i 's%^#baseurl=http://download.example/pub/fedora/linux/updates/$releasever/Everything/$basearch/%baseurl=http://mirror.init7.net/fedora/fedora/linux/updates/38/Everything/x86_64/%' /etc/yum.repos.d/fedora-updates.repo
-
 RELEASE="$(rpm -E %fedora)"
 
 INCLUDED_PACKAGES=($(jq -r "[(.all.include | (select(.\"$PACKAGE_LIST\" != null).\"$PACKAGE_LIST\")[]), \
@@ -31,6 +27,3 @@ if [[ "${#EXCLUDED_PACKAGES[@]}" -gt 0 ]]; then
     rpm-ostree override remove \
         ${EXCLUDED_PACKAGES[@]}
 fi
-
-# reset forced use of single rpmfusion mirror
-rename -v .repo.bak .repo /etc/yum.repos.d/fedora-updates.repo.bak
