@@ -3,7 +3,7 @@ on:
   schedule:
     - cron: '22 9 * * *'  # ublue-os/main (which we build upon) builds 08:00 every day -> we build a bit later
   push:
-    branches:
+    branches-ignore:
       - main
     paths-ignore:
       - '**.md'
@@ -14,7 +14,7 @@ env:
 
 jobs:
   push-ghcr:
-    name: Build and push image
+    name: Make
     runs-on: ubuntu-22.04
     permissions:
       contents: read
@@ -31,6 +31,13 @@ jobs:
             is_latest_version: true
             is_stable_version: true
     steps:
+      - name: Maximize build space
+        uses: AdityaGarg8/remove-unwanted-software@v1
+        with:
+          remove-dotnet: 'true'
+          remove-android: 'true'
+          remove-haskell: 'true'
+
       # Checkout push-to-registry action GitHub repository
       - name: Checkout Push to Registry action
         uses: actions/checkout@v4
