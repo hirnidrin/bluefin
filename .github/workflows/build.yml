@@ -1,7 +1,7 @@
 name: Build and Push Image
 on:
   schedule:
-    - cron: '22 9 * * *'  # ublue-os/main (which we build upon) builds 08:00 every day -> we build a bit later
+    - cron: '15 8 * * *'  # ublue-os/main (which we build upon) builds 07:00 every day -> we build a bit later
   push:
     branches-ignore:
       - main
@@ -32,11 +32,7 @@ jobs:
             is_stable_version: true
     steps:
       - name: Maximize build space
-        uses: AdityaGarg8/remove-unwanted-software@v1
-        with:
-          remove-dotnet: 'true'
-          remove-android: 'true'
-          remove-haskell: 'true'
+        uses: ublue-os/remove-unwanted-software@v6
 
       # Checkout push-to-registry action GitHub repository
       - name: Checkout Push to Registry action
@@ -111,23 +107,6 @@ jobs:
             io.artifacthub.package.readme-url=https://raw.githubusercontent.com/hirnidrin/bluefin/main/README.md
             io.artifacthub.package.logo-url=https://avatars.githubusercontent.com/u/120078124?s=200&v=4
 
-      # Make room in builder image because buildah action fails with error 125 'no space left on device' when building bluefin-dx, see
-      # https://github.com/actions/runner-images/issues/2875#issuecomment-1167936457 and https://github.com/jlumbroso/free-disk-space
-      - name: Free Disk Space (Ubuntu) on builder image
-        uses: hirnidrin/free-disk-space@main
-        with:
-          # this might remove tools that are actually needed,
-          # if set to "true" but frees about 6 GB
-          tool-cache: false
-          # all of these default to true, but feel free to set to
-          # "false" if necessary for your workflow
-          android: true
-          dotnet: true
-          haskell: true
-          large-packages: true
-          docker-images: true
-          swap-storage: true
-
       # Build image using Buildah action
       - name: Build Image
         id: build_image
@@ -139,6 +118,7 @@ jobs:
           tags: |
             ${{ steps.generate-tags.outputs.alias_tags }}
           build-args: |
+            IMAGE_NAME=${{ env.IMAGE_NAME }}
             IMAGE_FLAVOR=${{ matrix.image_flavor }}
             FEDORA_MAJOR_VERSION=${{ matrix.major_version }}
             TARGET_BASE=${{ matrix.target_base }}
