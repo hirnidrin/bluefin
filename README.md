@@ -4,17 +4,15 @@ A clone of [ublue-os bluefin](https://github.com/ublue-os/bluefin), slightly ada
 
 ## Notes
 
-1. I don't build
-   * the NVIDIA GPU version.
-   * the `nokmods` version.
-   * the toolboxes. Let's just work with the originals.
-1. This repo holds the code for all of the above. I just skip building these using a modified `.github/workflows` folder.
+1. I only build the the `bluefin` and `bluefin-dx` editions, for Intel or AMD GPU based hardware.
+1. I don't build the toolboxes. Let's just work with the originals.
+1. This repo holds the full code for all editions. I just skip building many of them using a modified `.github/workflows` folder.
 1. My changes are
    * modified/additional dconf settings in `usr/etc/dconf/db/local.d/02-mysysdefaults`.
    * additional [flathub.org](https://flathub.org/) apps in `usr/etc/yafti.yml`.
-   * additional `just` recipes in the `just/` folder, all files will be merged when building the image.
+   * additional `just` recipes in the `just/` folder, all files there will be concatenated when building the image.
    * additional distrobox images in `dx/etc/distrobox/distrobox.ini` (build with `just assemble`):
-     * [chainguard.dev](https://edu.chainguard.dev/chainguard/chainguard-images/reference/node/image_specs/) nodejs development image (experimental).
+     * todo
 
 ## Initial install
 
