@@ -82,7 +82,7 @@ starknet-dojo-rm:
   echo 'Starknet Dojo Engine removed.'
 
 # Install Starknet tools - Scarb, Starkli, Dojo Engine
-starknet-all: starknet-scarb starknet-starkli starknet-dojo
+starknet: starknet-scarb starknet-starkli starknet-dojo
 
 # Remove Starknet tools - Scarb, Starkli, Dojo Engine
-starknet-all-rm: starknet-scarb-rm starknet-starkli-rm starknet-dojo-rm
+starknet-rm: starknet-scarb-rm starknet-starkli-rm starknet-dojo-rm
