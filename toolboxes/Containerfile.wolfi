@@ -8,50 +8,16 @@ LABEL com.github.containers.toolbox="true" \
 
 COPY ./toolboxes/packages.wolfi /toolbox-packages
 
-# Update image & add dependencies
+# Update image
 RUN apk update && \
     apk upgrade
 
-# Add Distrobox specific packages
-RUN apk add sudo-rs \
-        procps \
-        bash \
-        bzip2 \
-        curl \
-        diffutils \
-        findmnt \
-        findutils \
-        git \
-        gpg \
-        iproute2 \
-        iputils \
-        keyutils \
-        libcap \
-        ncurses \
-        ncurses-terminfo \
-        net-tools \
-        openssh-client \
-        posix-libc-utils \
-        rsync \
-        tcpdump \
-        tree \
-        umount \
-        util-linux \
-        util-linux-misc \
-        wget \
-        xz \
-        zip
-
-# Set up dependencies
-RUN git clone https://github.com/89luca89/distrobox.git --single-branch /tmp/distrobox && \
-    cp /tmp/distrobox/distrobox-host-exec /usr/bin/distrobox-host-exec && \
-    wget https://github.com/1player/host-spawn/releases/download/$(cat /tmp/distrobox/distrobox-host-exec | grep host_spawn_version= | cut -d "\"" -f 2)/host-spawn-$(uname -m) -O /usr/bin/host-spawn && \
-    chmod +x /usr/bin/host-spawn && \
-    rm -rf /tmp/distrobox
+# The initial 'distrobox enter wolfi' command will invoke https://github.com/89luca89/distrobox/blob/main/distrobox-init
+# which will install many basic packages and distrobox deps (see at about line 400+) -> no need to add anything here.
 
 # Add optional packages
 RUN grep -v '^#' /toolbox-packages | xargs apk add
-    
+
 RUN rm /toolbox-packages
 
 # Change root shell to BASH
