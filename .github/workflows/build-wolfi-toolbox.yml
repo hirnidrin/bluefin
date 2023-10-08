@@ -1,5 +1,12 @@
 name: Build and Push Wolfi Toolbox Image
 on:  
+  push:
+    branches-ignore:
+      - main
+      - upstream-main
+    paths-ignore:
+      - '**.md'
+      - '**.txt'
   workflow_dispatch:
 env:
     IMAGE_NAME: wolfi-toolbox

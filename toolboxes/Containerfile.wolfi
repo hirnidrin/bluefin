@@ -12,8 +12,8 @@ COPY ./toolboxes/packages.wolfi /toolbox-packages
 RUN apk update && \
     apk upgrade
 
-# The initial 'distrobox enter wolfi' command will invoke https://github.com/89luca89/distrobox/blob/main/distrobox-init
-# which will install many basic packages and distrobox deps (see at about line 400+) -> no need to add anything here.
+# The initial 'distrobox enter wolfi' command invokes https://github.com/89luca89/distrobox/blob/main/distrobox-init
+# which installs many basic packages and distrobox deps (see at about line 400+) -> no need to add anything here.
 
 # Add optional packages
 RUN grep -v '^#' /toolbox-packages | xargs apk add
