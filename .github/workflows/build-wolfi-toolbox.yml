@@ -1,9 +1,10 @@
 name: Build and Push Wolfi Toolbox Image
 on:  
+  schedule:
+    - cron: '15 5 * * *'
   push:
-    branches-ignore:
+    branches:
       - main
-      - upstream-main
     paths-ignore:
       - '**.md'
       - '**.txt'
