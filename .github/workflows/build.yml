@@ -3,7 +3,7 @@ on:
   schedule:
     - cron: '15 8 * * *'  # ublue-os/main (which we build upon) builds 07:00 every day -> we build a bit later
   push:
-    branches-ignore:
+    branches:
       - main
     paths-ignore:
       - '**.md'
