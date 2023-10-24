@@ -5,8 +5,8 @@ A clone of [ublue-os bluefin](https://github.com/ublue-os/bluefin), slightly ada
 ## Notes
 
 1. I only build the the `bluefin` and `bluefin-dx` editions, for Intel or AMD GPU based hardware.
-1. I don't build the toolboxes. Let's just work with the originals.
-1. This repo holds the full code for all editions. I just skip building many of them using a modified `.github/workflows` folder.
+1. I don't build the toolboxes, except the `wolfi-toolbox` (experimental). Let's just work with the originals.
+1. This repo holds the full code for all editions and toolboxes. I just skip building most of it using a modified `.github/workflows` folder.
 1. My changes are
    * modified/additional dconf settings in `usr/etc/dconf/db/local.d/02-mysysdefaults`.
    * additional [flathub.org](https://flathub.org/) apps in `usr/etc/yafti.yml`.
@@ -16,7 +16,7 @@ A clone of [ublue-os bluefin](https://github.com/ublue-os/bluefin), slightly ada
 
 ## Initial install
 
-1. Download and install the latest `universalblue-38.iso` from [ublue-os/main/releases](https://github.com/ublue-os/main/releases). Follow the official [installation instructions](https://ublue.it/installation/). Quick steps when booting off the ISO:
+1. Download and install the latest `universalblue-38.iso` from [ublue-os/main/releases](https://github.com/ublue-os/main/releases). Follow the official [installation instructions](https://universal-blue.org/installation/). Quick steps when booting off the ISO:
    * Choose `Install ublue-os/main` (this is for Intel/AMD GPU hardware).
    * Then choose `Install silverblue-main (GNOME)`.
    * Now walk thru the installation wizard.
@@ -44,7 +44,7 @@ A clone of [ublue-os bluefin](https://github.com/ublue-os/bluefin), slightly ada
 
 The system checks daily for updates. If available:
    * Flatpak and distrobox updates are applied immediately.
-   * OS updates are applied on the next reboot.
+   * OS updates are staged in the background, then applied on the next reboot.
 
 So just shutdown your machine when you quit working. Come back and power on -> everything is up to date.
 
