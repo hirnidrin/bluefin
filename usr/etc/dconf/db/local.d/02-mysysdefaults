@@ -1,3 +1,8 @@
+[org/gnome/desktop/background]
+picture-uri='file:///usr/share/backgrounds/lagoon.jpg'
+picture-uri-dark='file:///usr/share/backgrounds/lagoon.jpg'
+picture-options='stretched'
+
 [org/gnome/desktop/interface]
 color-scheme='prefer-dark'
 monospace-font-name="Ubuntu Mono 11"
