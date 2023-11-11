@@ -3,7 +3,7 @@ ARG IMAGE_FLAVOR="${IMAGE_FLAVOR:-main}"
 ARG AKMODS_FLAVOR="${AKMODS_FLAVOR:-main}"
 ARG SOURCE_IMAGE="${SOURCE_IMAGE:-$BASE_IMAGE_NAME-$IMAGE_FLAVOR}"
 ARG BASE_IMAGE="ghcr.io/ublue-os/${SOURCE_IMAGE}"
-ARG FEDORA_MAJOR_VERSION="${FEDORA_MAJOR_VERSION:-38}"
+ARG FEDORA_MAJOR_VERSION="${FEDORA_MAJOR_VERSION:-39}"
 ARG TARGET_BASE="${TARGET_BASE:-bluefin}"
 
 ## bluefin image section
@@ -48,8 +48,11 @@ RUN sed -i 's@enabled=0@enabled=1@g' /etc/yum.repos.d/_copr_ublue-os-akmods.repo
             /tmp/akmods-rpms/kmods/*v4l2loopback*.rpm \
             /tmp/akmods-rpms/kmods/*wl*.rpm \
     ; fi && \
-    rpm-ostree install \
-        /tmp/akmods-rpms/kmods/*evdi*.rpm && \
+    # Don't install evdi on asus because of conflicts
+    if grep -qv "asus" <<< "${AKMODS_FLAVOR}"; then \
+        rpm-ostree install \
+            /tmp/akmods-rpms/kmods/*evdi*.rpm \
+    ; fi && \
     sed -i 's@enabled=1@enabled=0@g' /etc/yum.repos.d/negativo17-fedora-multimedia.repo
 
 # Starship Shell Prompt
