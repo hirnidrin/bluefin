@@ -29,11 +29,11 @@ A clone of [ublue-os bluefin](https://github.com/ublue-os/bluefin), slightly ada
    * Rebase the OS, according to which build you prefer:
      * regular user experience
 
-           sudo rpm-ostree rebase ostree-image-signed:docker://ghcr.io/hirnidrin/bluefin:38
+           sudo rpm-ostree rebase ostree-image-signed:docker://ghcr.io/hirnidrin/bluefin:39
 
      * developer experience
 
-           sudo rpm-ostree rebase ostree-image-signed:docker://ghcr.io/hirnidrin/bluefin-dx:38
+           sudo rpm-ostree rebase ostree-image-signed:docker://ghcr.io/hirnidrin/bluefin-dx:39
 
 3. Reboot and login, open a terminal (Ctrl-Alt-t) and run an update cycle:
 
