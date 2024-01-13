@@ -1,3 +1,38 @@
 # The initial 'distrobox enter wolfi' command invokes https://github.com/89luca89/distrobox/blob/main/distrobox-init
 # which installs many basic packages and distrobox deps (starts at about line 410+ for the bash shell).
-# So there is no need to pre-install duplicate dependency packages here that possibly induce conflicts.
+# Copy that list over here to pre-install them into the container so
+# -> distrobox init will be faster as it does not have to install these packages,
+# -> we will catch possible problems/errors here at build time, before publishing a container that fails at distrobox init.
+bash
+bzip2
+coreutils
+curl
+diffutils
+findmnt
+findutils
+gnupg
+gpg
+iproute2
+iputils
+keyutils
+libcap
+mount
+ncurses
+ncurses-terminfo
+net-tools
+openssh-client
+pigz
+posix-libc-utils
+procps
+rsync
+su-exec
+tcpdump
+tree
+tzdata
+umount
+util-linux
+util-linux-misc
+wget
+xz
+zip
+vulkan-loader
