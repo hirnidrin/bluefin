@@ -1,12 +1,11 @@
 # bluefin
 
-A clone of [ublue-os bluefin](https://github.com/ublue-os/bluefin), slightly adapted for me. All credit goes to [team Universal Blue](https://universal-blue.org/) - my hat's off to you!
+A clone of [ublue-os bluefin](https://github.com/ublue-os/bluefin), slightly adapted for me. All credit goes to [team Universal Blue](https://universal-blue.org/) and contributors - my hat's off to you!
 
 ## Notes
 
 1. I only build the the `bluefin` and `bluefin-dx` editions, for Intel or AMD GPU based hardware.
-1. I don't build the toolboxes, except the `wolfi-toolbox` (experimental). Let's just work with the originals.
-1. This repo holds the full code for all editions and toolboxes. I just skip building most of it using a modified `.github/workflows` folder.
+1. This repo holds the full code for all editions. I just skip building most of it using a modified `.github/workflows` folder.
 1. My changes are
    * modified/additional dconf settings in `usr/etc/dconf/db/local.d/50-my-defaults` and `dx/usr/etc/dconf/db/local.d/60-my-dx-keybindings`.
    * additional [flathub.org](https://flathub.org/) apps in `usr/etc/yafti.yml`.
