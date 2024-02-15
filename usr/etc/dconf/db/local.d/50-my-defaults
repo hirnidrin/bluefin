@@ -30,12 +30,6 @@ favorite-apps = ['org.gnome.Nautilus.desktop', 'org.gnome.TextEditor.desktop', '
 default-size-columns=132
 default-size-rows=43
 
-[com/raggesilver/BlackBox]
-font="Ubuntu Mono 11"
-remember-window-size=true
-window-width=1070
-window-height=780
-
 [org/gnome/Prompt]
 restore-window-size=true
 window-size=(132,43)
