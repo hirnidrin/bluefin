@@ -30,6 +30,5 @@ favorite-apps = ['org.gnome.Nautilus.desktop', 'org.gnome.TextEditor.desktop', '
 default-size-columns=132
 default-size-rows=43
 
-[org/gnome/Prompt]
+[org/gnome/Ptyxis]
 restore-window-size=true
-window-size=(132,43)
