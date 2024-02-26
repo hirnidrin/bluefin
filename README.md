@@ -10,7 +10,7 @@ A clone of [ublue-os bluefin](https://github.com/ublue-os/bluefin), slightly ada
    * modified/additional dconf settings in `usr/etc/dconf/db/local.d/50-my-defaults` and `dx/usr/etc/dconf/db/local.d/60-my-dx-keybindings`.
    * additional [flathub.org](https://flathub.org/) apps in `usr/etc/yafti.yml`.
    * additional `just` recipes in the `just/` folder, all files there will be concatenated when building the image.
-   * additional distrobox images in `dx/etc/distrobox/distrobox.ini` (build with `just assemble`):
+   * additional distrobox images in `dx/etc/distrobox/distrobox.ini` (build with `ujust assemble`):
      * todo
 
 ## Initial install
