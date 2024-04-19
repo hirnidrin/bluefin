@@ -16,6 +16,10 @@ jobs:
     name: build
     uses: ./.github/workflows/reusable-build.yml
     secrets: inherit
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
     with:
       brand_name: bluefin
       fedora_version: 39
