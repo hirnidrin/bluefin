@@ -1,0 +1,21 @@
+name: bluefin 39
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+      - '**.txt'
+      - 'system_files/kinoite/**'
+  schedule:
+    - cron: '20 16 * * *'  # ublue-os/main (which we build upon) builds 15:10 UTC everyday -> we build a bit later
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: build
+    uses: ./.github/workflows/reusable-build.yml
+    secrets: inherit
+    with:
+      brand_name: bluefin
+      fedora_version: 39
