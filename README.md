@@ -2,6 +2,8 @@
 
 A clone of [ublue-os bluefin](https://github.com/ublue-os/bluefin), slightly adapted for me. All credit goes to the [Project Bluefin team](https://projectbluefin.io/) and contributors - my hat's off to you!
 
+[![bluefin 39](https://github.com/hirnidrin/bluefin/actions/workflows/build-39-bluefin.yml/badge.svg)](https://github.com/hirnidrin/bluefin/actions/workflows/build-39-bluefin.yml)
+
 ## Notes
 
 1. I only build the `bluefin` and `bluefin-dx` brands, version Fedora 39, for the `main` flavor (generic hardware with Intel or AMD GPU).
@@ -43,7 +45,7 @@ A clone of [ublue-os bluefin](https://github.com/ublue-os/bluefin), slightly ada
 
 1. Reboot and login, open a terminal (Ctrl-Alt-t) and run another update cycle:
 
-       just update
+       ujust update
        systemctl reboot
 
 ## Maintenance
