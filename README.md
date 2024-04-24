@@ -9,13 +9,9 @@ A clone of [ublue-os bluefin](https://github.com/ublue-os/bluefin), slightly ada
 1. I only build the `bluefin` and `bluefin-dx` brands, version Fedora 39, for the `main` flavor (generic hardware with Intel or AMD GPU).
 1. This repo holds the full code for all brands, Fedora versions and flavors. I just skip building most of it using a modified [.github/workflows](.github/workflows) folder.
 1. My changes are
-   * modified/additional dconf settings
-     * [system_files/silverblue/usr/etc/dconf/db/local.d/50-my-defaults](system_files/silverblue/usr/etc/dconf/db/local.d/50-my-defaults)
-     * [system_files/silverblue/usr/etc/dconf/db/local.d/52-my-extensions](system_files/silverblue/usr/etc/dconf/db/local.d/52-my-extensions)
-     * [system_files/dx/usr/etc/dconf/db/local.d/60-my-dx-keybindings](system_files/dx/usr/etc/dconf/db/local.d/60-my-dx-keybindings)
+   * dconf modification: added `service-db:keyfile/user` to [system_files/silverblue/usr/etc/dconf/profile/user](system_files/silverblue/usr/etc/dconf/profile/user) -> I get a hot-synched, human-readable dconf ini file `~/.config/dconf/user.txt` reflecting my custom settings, ready for versioned backup/restore.
    * additional [flathub.org](https://flathub.org/) apps in [system_files/shared/usr/etc/yafti.yml](system_files/shared/usr/etc/yafti.yml)
    * additional `ujust` recipes in the [just](just) folder, all files there will be concatenated when building the image.
-   * additional distrobox images in [system_files/shared/usr/etc/distrobox/distrobox.ini](system_files/shared/usr/etc/distrobox/distrobox.ini) - build with `ujust assemble`
 
 ## Initial install
 
