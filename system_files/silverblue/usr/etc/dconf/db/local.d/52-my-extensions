@@ -1,6 +1,0 @@
-[org/gnome/shell/extensions/dash-to-dock]
-dash-max-icon-size=24
-dock-position='LEFT'
-extend-height=true
-show-apps-at-top=true
-click-action='focus-or-previews'
