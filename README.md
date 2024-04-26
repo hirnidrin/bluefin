@@ -12,6 +12,7 @@ A clone of [ublue-os bluefin](https://github.com/ublue-os/bluefin), slightly ada
    * dconf modification: added `service-db:keyfile/user` to [system_files/silverblue/usr/etc/dconf/profile/user](system_files/silverblue/usr/etc/dconf/profile/user) -> I get a hot-synched, human-readable dconf ini file `~/.config/dconf/user.txt` reflecting my custom settings, ready for versioned backup/restore.
    * additional [flathub.org](https://flathub.org/) apps in [system_files/shared/usr/etc/yafti.yml](system_files/shared/usr/etc/yafti.yml)
    * additional `ujust` recipes in the [just](just) folder, all files there will be concatenated when building the image.
+   * keeping the original project background image: [system_files/silverblue/usr/share/backgrounds/lagoon.jpg](system_files/silverblue/usr/share/backgrounds/lagoon.jpg) and [system_files/silverblue/usr/share/gnome-background-properties/ublue-lagoon.xml](system_files/silverblue/usr/share/gnome-background-properties/ublue-lagoon.xml)
 
 ## Initial install
 
