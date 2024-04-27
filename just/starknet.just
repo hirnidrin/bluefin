@@ -39,8 +39,8 @@ starknet-starkli-rm:
     rm -f "${HOME}/.local/bin/starkliup"
     rm -f "${HOME}/.local/bin/starkli"
     rm -rf "${HOME}/.local/share/starkli"
-    sed -i /starkli/d .bashrc
-    sed -i /^[[:space:]]*$/d .bashrc
+    sed -i /starkli/d "${HOME}/.bashrc"
+    sed -i /^[[:space:]]*$/d "${HOME}/.bashrc"
     sed -i /starkli/d .bash_profile
     sed -i /^[[:space:]]*$/d .bash_profile
     echo 'Starknet Starkli tools removed.'
@@ -77,8 +77,8 @@ starknet-dojo-rm:
     rm -f "${HOME}/.local/bin/torii"
     rm -f "${HOME}/.local/bin/dojo-language-server"
     rm -rf "${HOME}/.local/share/dojo"
-    sed -i /dojo/d .bashrc
-    sed -i.bak /^[[:space:]]*$/d .bashrc
+    sed -i /dojo/d "${HOME}/.bashrc"
+    sed -i.bak /^[[:space:]]*$/d "${HOME}/.bashrc"
     echo 'Starknet Dojo Engine removed.'
 
 # Install Starknet tools - Scarb, Starkli, Dojo Engine

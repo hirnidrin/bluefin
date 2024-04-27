@@ -18,6 +18,6 @@ rust:
 # Remove Rust toolchain - rustup, rustc, cargo, etc
 rust-rm:
     rustup self uninstall
-    sed -i /RUSTUP_HOME/d .bashrc
-    sed -i /CARGO_HOME/d .bashrc
-    sed -i /^[[:space:]]*$/d .bashrc
+    sed -i /RUSTUP_HOME/d "${HOME}/.bashrc"
+    sed -i /CARGO_HOME/d "${HOME}/.bashrc"
+    sed -i /^[[:space:]]*$/d "${HOME}/.bashrc"
