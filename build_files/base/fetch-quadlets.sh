@@ -18,7 +18,7 @@ wget --output-document="/usr/etc/containers/systemd/users/fedora-toolbox.contain
 sed -i 's/ContainerName=fedora-distrobox-quadlet/ContainerName=fedora-toolbox/' /usr/etc/containers/systemd/users/fedora-toolbox.container
 
 # ubuntu-toolbox
-wget --output-document="/usr/etc/containers/systemd/users/ubuntu-toolbox.container" --quiet https://raw.githubusercontent.com/ublue-os/toolboxes/main/quadlets/ubuntu-toolbox/ubuntu-distrobox-quadlet.container 
+wget --output-document="/usr/etc/containers/systemd/users/ubuntu-toolbox.container" --quiet https://raw.githubusercontent.com/hirnidrin/toolboxes/main/quadlets/ubuntu-toolbox/ubuntu-distrobox-quadlet.container 
 sed -i 's/ContainerName=ubuntu-distrobox-quadlet/ContainerName=ubuntu-toolbox/' /usr/etc/containers/systemd/users/ubuntu-toolbox.container
 
 # wolfi-toolbox
