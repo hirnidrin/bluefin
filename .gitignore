@@ -1,1 +1,6 @@
 *.code-workspace
+*.iso
+*_flatpaks/flatpaks_with_deps
+flatpak.*
+
+scripts/files/home/ublue-os/*
