@@ -1,6 +1,7 @@
 *.code-workspace
 *.iso
-*_flatpaks/flatpaks_with_deps
+*.iso-CHECKSUM
+flatpaks_with_deps
 flatpak.*
 
 scripts/files/home/ublue-os/*
