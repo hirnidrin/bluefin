@@ -2,11 +2,11 @@
 
 A clone of [ublue-os bluefin](https://github.com/ublue-os/bluefin), slightly adapted for me. All credit goes to the [Project Bluefin team](https://projectbluefin.io/) and contributors - my hat's off to you!
 
-[![bluefin 39](https://github.com/hirnidrin/bluefin/actions/workflows/build-39-bluefin.yml/badge.svg)](https://github.com/hirnidrin/bluefin/actions/workflows/build-39-bluefin.yml) [![bluefin 40](https://github.com/hirnidrin/bluefin/actions/workflows/build-40-bluefin.yml/badge.svg)](https://github.com/hirnidrin/bluefin/actions/workflows/build-40-bluefin.yml)
+[![bluefin 40](https://github.com/hirnidrin/bluefin/actions/workflows/build-40-bluefin.yml/badge.svg)](https://github.com/hirnidrin/bluefin/actions/workflows/build-40-bluefin.yml)
 
 ## Notes
 
-1. I only build the `bluefin` and `bluefin-dx` brands, version Fedora 39, for the `main` flavor (generic hardware with Intel or AMD GPU).
+1. I only build the `bluefin` and `bluefin-dx` brands, version Fedora 40, for the `main` flavor (generic hardware with Intel or AMD GPU).
 1. This repo holds the full code for all brands, Fedora versions and flavors. I just skip building most of it using a modified [.github/workflows](.github/workflows) folder.
 1. My changes are
    * dconf modification: added `service-db:keyfile/user` to [system_files/silverblue/usr/etc/dconf/profile/user](system_files/silverblue/usr/etc/dconf/profile/user) -> I get a hot-synched, human-readable dconf ini file `~/.config/dconf/user.txt` reflecting my custom settings, ready for versioned backup/restore.
