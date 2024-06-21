@@ -222,16 +222,22 @@ jobs:
           extra-args: |
             --target=${{ env.TARGET_NAME }}
 
-      - name: Sign kernel
-        uses: ublue-os/kernel-signer@v0.2.3
-        with:
-          image: ${{ steps.build_image.outputs.image }}
-          default-tag: ${{ env.DEFAULT_TAG }}
-          privkey: ${{ secrets.AKMOD_PRIVKEY_20230518 }}
-          pubkey: /etc/pki/akmods/certs/akmods-ublue.der
-          tags: ${{ steps.build_image.outputs.tags }}
-          kernel_suffix: ${{ env.KERNEL_SUFFIX }}
-          strip: false
+      # I don't add my own signature to the kernel. It is the original Fedora upstream kernel, already signed by Fedora.
+      # As long as the Fedora key is enrolled in UEFI bios, Secure Boot will work.
+      # The ublue-os/akmods kernel modules are signed with the ublue key. Notes:
+      # * check enrolled keys: mokutil -l
+      # * add ublue key to UEFI: ujust enroll-secure-boot-key
+      #
+      # - name: Sign kernel
+      #   uses: ublue-os/kernel-signer@v0.2.3
+      #   with:
+      #     image: ${{ steps.build_image.outputs.image }}
+      #     default-tag: ${{ env.DEFAULT_TAG }}
+      #     privkey: ${{ secrets.AKMOD_PRIVKEY_20230518 }}
+      #     pubkey: /etc/pki/akmods/certs/akmods-ublue.der
+      #     tags: ${{ steps.build_image.outputs.tags }}
+      #     kernel_suffix: ${{ env.KERNEL_SUFFIX }}
+      #     strip: false
 
       # Workaround bug where capital letters in your GitHub username make it impossible to push to GHCR.
       # https://github.com/macbre/push-to-ghcr/issues/12
