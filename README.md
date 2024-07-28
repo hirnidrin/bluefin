@@ -2,7 +2,7 @@
 
 A clone of [ublue-os bluefin](https://github.com/ublue-os/bluefin), slightly adapted for me. All credit goes to the [Project Bluefin team](https://projectbluefin.io/) and contributors - my hat's off to you!
 
-[![bluefin 40](https://github.com/hirnidrin/bluefin/actions/workflows/build-40-bluefin.yml/badge.svg)](https://github.com/hirnidrin/bluefin/actions/workflows/build-40-bluefin.yml)
+[![Bluefin Latest](https://github.com/hirnidrin/bluefin/actions/workflows/build-latest-bluefin.yml/badge.svg)](https://github.com/hirnidrin/bluefin/actions/workflows/build-latest-bluefin.yml)
 
 ## Notes
 
