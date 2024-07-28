@@ -26,6 +26,7 @@
 				"make",
 				"mesa-libGLU",
 				"nerd-fonts",
+				"opendyslexic-fonts",
 				"playerctl",
 				"printer-driver-brlaser",
 				"pulseaudio-utils",
@@ -77,6 +78,7 @@
 			"dx": [
 				"adobe-source-code-pro-fonts",
 				"android-tools",
+				"bpftop",
 				"cascadia-code-fonts",
 				"cockpit-machines",
 				"cockpit-networkmanager",
@@ -130,6 +132,7 @@
 				"rocm-opencl",
 				"ubuntu-family-fonts",
 				"udica",
+				"umoci",
 				"virt-manager",
 				"virt-viewer",
 				"ydotool"
@@ -167,15 +170,15 @@
 		},
 		"exclude": {
 			"all": [],
-			"silverblue": [
-				
-			],
+			"silverblue": [],
 			"dx": []
 		}
 	},
 	"40": {
 		"include": {
-			"all": [],
+			"all": [
+				"ptyxis"
+			],
 			"silverblue": [],
 			"dx": []
 		},

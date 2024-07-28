@@ -1,4 +1,4 @@
-name: bluefin 40
+name: Bluefin Latest
 on:
   push:
     branches:
@@ -22,4 +22,4 @@ jobs:
       id-token: write
     with:
       brand_name: bluefin
-      fedora_version: 40
+      fedora_version: latest
