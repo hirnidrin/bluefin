@@ -12,6 +12,7 @@
 				"fish",
 				"firewall-config",
 				"foo2zjs",
+				"fuse-encfs",
 				"gcc",
 				"glow",
 				"gum",
@@ -64,7 +65,8 @@
 				"nautilus-gsconnect",
 				"nautilus-open-any-terminal",
 				"openssh-askpass",
-				"yaru-theme"
+				"yaru-theme",
+				"zenity"
 			],
 			"kinoite": [
 				"skanpage",
@@ -73,6 +75,7 @@
 				"kde-runtime-docs",
 				"kdenetwork-filesharing",
 				"kdeplasma-addons",
+				"kdialog",
 				"plasma-wallpapers-dynamic"
 			],
 			"dx": [
@@ -130,6 +133,7 @@
 				"qemu",
 				"rocm-hip",
 				"rocm-opencl",
+				"rocm-smi",
 				"ubuntu-family-fonts",
 				"udica",
 				"umoci",
