@@ -43,6 +43,7 @@
 				"samba-winbind-clients",
 				"samba-winbind-modules",
 				"samba",
+				"setools-console",
 				"solaar",
 				"sssd-ad",
 				"sssd-ipa",
@@ -156,6 +157,7 @@
 				"umoci",
 				"virt-manager",
 				"virt-viewer",
+				"virt-v2v",
 				"ydotool"
 			]
 		},
@@ -198,8 +200,7 @@
 	"40": {
 		"include": {
 			"all": [
-				"ptyxis",
-				"scx-scheds"
+				"ptyxis"
 			],
 			"silverblue": [],
 			"dx": []

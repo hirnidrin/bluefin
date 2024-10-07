@@ -56,7 +56,6 @@ So just shutdown your machine when you quit working. Come back and power on -> e
 
 ## Original documentation
 
-1. [Bluefin Docs](https://universal-blue.discourse.group/docs?category=6)
-2. [Discussions and Announcements](https://universal-blue.discourse.group/c/bluefin/6) - strongly recommended!
-3. [Developer Experience Edition](https://universal-blue.discourse.group/t/bluefin-dx-the-bluefin-developer-experience/39)
-4. [Administrator's Guide](https://universal-blue.discourse.group/t/bluefin-administrators-guide/40)
+1. [Discussions and Announcements](https://universal-blue.discourse.group/c/bluefin/6) - strongly recommended!
+2. [Documentation](https://docs.projectbluefin.io/)
+3. [Contributing Guide](https://docs.projectbluefin.io/contributing)
