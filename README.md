@@ -8,8 +8,8 @@ A clone of [ublue-os bluefin](https://github.com/ublue-os/bluefin), slightly ada
 
 1. I only build the `bluefin` and `bluefin-dx` brands, version Fedora 40, for the `main` flavor (generic hardware with Intel or AMD GPU).
 1. This repo holds the full code for all brands, Fedora versions and flavors. I just skip building most of it using a modified [.github/workflows](.github/workflows) folder.
-1. My changes are
-   * dconf modification: added `service-db:keyfile/user` to [system_files/silverblue/usr/etc/dconf/profile/user](system_files/silverblue/usr/etc/dconf/profile/user) -> I get a hot-synched, human-readable dconf ini file `~/.config/dconf/user.txt` reflecting my custom settings, ready for versioned backup/restore.
+1. ~~My changes are~~
+   * ~~dconf modification: added `service-db:keyfile/user` to [system_files/silverblue/usr/etc/dconf/profile/user](system_files/silverblue/usr/etc/dconf/profile/user) -> I get a hot-synched, human-readable dconf ini file `~/.config/dconf/user.txt` reflecting my custom settings, ready for versioned backup/restore.~~
    * ~~change the Podman autoupdate timer to fire after each login, not daily at midnight [system_files/shared/usr/lib/systemd/user/podman-auto-update.timer](system_files/shared/usr/lib/systemd/user/podman-auto-update.timer).~~
    * ~~additional [flathub.org](https://flathub.org/) apps in [system_files/shared/usr/etc/yafti.yml](system_files/shared/usr/etc/yafti.yml)~~
    * ~~additional `ujust` recipes in the [just](just) folder, all files there will be concatenated when building the image.~~
@@ -22,7 +22,7 @@ A clone of [ublue-os bluefin](https://github.com/ublue-os/bluefin), slightly ada
    * Developer: Yes
    * GPU: Intel or AMD
 
-1. Boot off the ISO and install Bluefin. After reboot and login, open a terminal (Ctrl-Alt-t) and run an initial update cycle:
+1. Boot off the ISO and install Bluefin. After reboot and login, open a terminal (Ctrl+Alt+t) and run an initial update cycle:
 
          ujust update
 
@@ -41,7 +41,7 @@ A clone of [ublue-os bluefin](https://github.com/ublue-os/bluefin), slightly ada
 
            sudo rpm-ostree rebase ostree-image-signed:docker://ghcr.io/hirnidrin/bluefin-dx:40
 
-1. Reboot and login, open a terminal (Ctrl-Alt-t) and run another update cycle:
+1. Reboot and login, open a terminal (Ctrl+Alt+t) and run another update cycle:
 
        ujust update
        systemctl reboot
