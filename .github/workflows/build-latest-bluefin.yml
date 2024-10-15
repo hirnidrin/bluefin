@@ -5,8 +5,6 @@ on:
       - main
     paths-ignore:
       - '**.md'
-      - '**.txt'
-      - 'system_files/kinoite/**'
   schedule:
     - cron: '35 5 * * *'  # ublue-os/main (which we build upon) builds 3:05 UTC everyday -> we build a bit later
   workflow_dispatch:
