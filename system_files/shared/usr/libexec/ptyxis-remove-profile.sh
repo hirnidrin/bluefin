@@ -43,7 +43,7 @@ for i in "${!array[@]}"; do
     label=$(dconf read "${profile}label")
     label=${label:1:-1}
 
-    if test "$ublue_os" = "true"; then
+    if test "$ublue_os" = "true" || test -z "$label"; then
         # Don't delete the profile if it's the default or if it's enabled
         if ! test "$DEFAULT_VALUE" = "$guid" && test "$name" = "$label" && ! systemctl --user --quiet is-enabled "${name}".target; then
             dconf reset -f "${profile}"
