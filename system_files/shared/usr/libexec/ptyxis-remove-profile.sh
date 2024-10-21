@@ -45,7 +45,7 @@ for i in "${!array[@]}"; do
 
     if test "$ublue_os" = "true" || test -z "$label"; then
         # Don't delete the profile if it's the default or if it's enabled
-        if ! test "$DEFAULT_VALUE" = "$guid" && test "$name" = "$label" && ! systemctl --user --quiet is-enabled "${name}".target; then
+        if ! test "$DEFAULT_VALUE" = "$guid" && $(test "$name" = "$label" || test -z "$label") && ! systemctl --user --quiet is-enabled "${name}".target; then
             dconf reset -f "${profile}"
             # remove the guid from the array
             unset 'array[i]'
