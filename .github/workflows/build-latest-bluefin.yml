@@ -1,12 +1,5 @@
 name: Bluefin Latest
 on:
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - '**.md'
-  schedule:
-    - cron: '35 5 * * *'  # ublue-os/main (which we build upon) builds 3:05 UTC everyday -> we build a bit later
   workflow_dispatch:
 
 jobs:

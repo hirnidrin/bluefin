@@ -4,6 +4,10 @@ A clone of [ublue-os bluefin](https://github.com/ublue-os/bluefin), slightly ada
 
 [![Bluefin Latest](https://github.com/hirnidrin/bluefin/actions/workflows/build-latest-bluefin.yml/badge.svg)](https://github.com/hirnidrin/bluefin/actions/workflows/build-latest-bluefin.yml)
 
+## This repo is DEPRECATED
+
+As of November 2024, I no longer keep this bluefin fork up to date. The original has matured enough, so I just use that. Most of my adaptions have become superfluous, or can be applied by adding additional or overloading system default configs in `~/` and `/etc`.
+
 ## Notes
 
 1. I only build the `bluefin` and `bluefin-dx` brands, version Fedora 40, for the `main` flavor (generic hardware with Intel or AMD GPU).
